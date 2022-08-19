@@ -1,0 +1,7 @@
+# client
+node_modules
+dist
+
+# webapi
+bin
+obj
