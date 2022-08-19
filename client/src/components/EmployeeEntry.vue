@@ -1,33 +1,42 @@
 <template>
     <tr>
         <td>
-            <router-link :to="{path: '/employeeInfo/' + id}">{{employee}}</router-link>
+            <router-link :to="{path: '/employee/view/' + id}" class="entry-name">{{fullName}}</router-link>
         </td>
-        <td>{{position}}</td>
-        <td>
-            <button>Edit user</button>
+        <td>{{date ? date : position}}</td>
+        <td v-if="!date">
+            <router-link :to="{path: '/employee/edit/' + id}">
+                <button class="button misc-button">Edit user</button>
+            </router-link>
+
         </td>
+        <td v-else>{{position}}</td>
         <td>
-            <button>Delete user</button>
+            <button class="button delete-button">Delete user</button>
         </td>
     </tr>
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
 
-defineProps<{
+const props = defineProps<{
     id: number,
-    employee: string,
-    position: string
+    fName: string,
+    lName: string,
+    position: string,
+    date?: string
 }>();
+
+const fullName = computed(() => props.fName + " " + props.lName);
 
 </script>
 <style scoped lang="scss">
 
     tr {
         border-bottom: 1px solid black;
-    }
-    td {
-        padding: 10px;
+
+        td {
+            padding: 10px;
+        }
     }
 </style>

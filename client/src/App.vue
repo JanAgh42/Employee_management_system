@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
 * {
   margin: 0;
   padding: 0;
@@ -44,4 +44,59 @@
   text-align: center;
   color: #2c3e50;
 }
+
+.button {
+  border: transparent;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.primary-button {
+  border-radius: 10px;
+  background-color: rgb(18, 107, 196);
+  max-width: 200px;
+
+  &:hover {
+    background-color: rgb(15, 94, 173);
+  }
+}
+
+.misc-button {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(182, 182, 182);
+
+  &:hover {
+    background-color: rgb(151, 151, 151);
+  }     
+}
+
+.delete-button {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(255, 0, 0);
+
+  &:hover {
+    background-color: rgb(212, 2, 2);
+  }
+}
+
+.table-content {
+  justify-content: center;
+  margin-top: 20px;
+
+  th {
+    padding: 10px 50px;
+    border: 1px solid black;
+    background-color: rgb(68, 144, 221);
+    color: rgb(255,255,255);
+  }
+}
+
+.entry-name {
+  text-decoration: none;
+  font-weight: 600;
+  color: black;
+}
+
 </style>

@@ -1,6 +1,8 @@
 <template>
     <div class="btn-cont flex">
-        <button class="new-empl-button">Add new Employee</button>
+        <router-link to="/employee/add/new">
+            <button class="button primary-button" id="new-empl-button">Add new Employee</button>
+        </router-link>
     </div>
     <div class="table-content flex">
         <TableComp>
@@ -11,9 +13,10 @@
                 <th>Delete user</th>          
             </template>
             <template v-slot:table-body>
-                <EmployeeEntry v-for="entry in data" :key="entry.id" :employee="entry.name" :position="entry.position" :id="entry.id"/>
+                <EmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" :lName="entry.lastName" :position="entry.position" :id="entry.id"/>
             </template>
         </TableComp>
+        <ArchiveDialog/>
     </div>
 </template>
 <script setup lang="ts">
@@ -22,23 +25,27 @@
 
     import EmployeeEntry from '../components/EmployeeEntry.vue';
     import TableComp from '../components/TableComp.vue';
+    import ArchiveDialog from '../modals/ArchiveDialog.vue';
 
     const store = useStore();
     
     const data = ref([
         {
             id: 1,
-            name: 'user1',
+            firstName: 'f1',
+            lastName: 'l1',
             position: 'pos1'
         },
         {
             id: 2,
-            name: 'user2',
+            firstName: 'f2',
+            lastName: 'l2',
             position: 'pos2'
         },
         {
             id: 3,
-            name: 'user3',
+            firstName: 'f3',
+            lastName: 'l3',
             position: 'pos3'
         },
     ]);
@@ -48,26 +55,10 @@
 
     .btn-cont{
         justify-content: center;
-        margin-bottom: 20px;
-        .new-empl-button {
-            padding: 20px;
-            border-color: transparent;
-            font-weight: bold;
+
+        #new-empl-button {
             font-size: 1rem;
-            border-radius: 10px;
-            background-color: rgb(17, 93, 169);
-            max-width: 200px;
-            color: rgb(255, 255, 255);
+            padding: 20px;
         }
     }
-
-    .table-content {
-        justify-content: center;
-
-        th {
-            padding: 10px 50px;
-            border: 1px solid black;
-        }
-    }
-    
 </style>

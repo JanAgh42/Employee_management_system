@@ -27,12 +27,12 @@
 
         a {
             text-decoration: none;
-            color: rgb(255, 255, 255);
+            color: rgb(230, 228, 228);
             font-weight: bold;
-        }
 
-        a:hover {
-            text-decoration: underline;
+            &:hover {
+                color: rgb(255, 255, 255);
+            }
         }
     }
 }

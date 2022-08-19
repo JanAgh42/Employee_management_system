@@ -1,4 +1,10 @@
 <template>
+
+    <div class="button-cont flex">
+        <button class="button misc-button" @click="$router.go(-1)">Return back</button>
+        <button class="button primary-button" id="save-button" v-if="!viewOnly">Save changes</button>
+    </div>
+
     <div class="modal flex column">
         <div class="name-section flex">
              <div class="input-field">
@@ -32,7 +38,7 @@
                 <input type="text" name="dateofbirth"/>
             </div>
             <div class="input-field">
-                <label for="workingsince">Working since: </label>
+                <label for="workingsince">Salary: </label>
                 <input type="text" name="workingsince"/>
             </div>
         </div>
@@ -40,15 +46,20 @@
 </template>
 <script setup lang="ts">
 
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
-const variable = ref("string");
+const viewOnly = computed(() => useRoute().params.action === 'view');
+
+/* TODO repair go-back
+
+function returnBack() { useRouter().go(-1); }*/
 
 </script>
+
 <style scoped lang="scss">
 
 .modal {
-    background-color: aquamarine;
     padding: 20px;
 }
 .name-section {
@@ -57,12 +68,31 @@ const variable = ref("string");
 
     .input-field {
         flex: 1;
+
+        .disable {
+            pointer-events: none;
+        }
+
+        input[type="text"] {
+            padding: 3px;
+            border-style: none;
+            border-bottom: 1px solid black;
+
+            &:focus {
+                outline: none;
+            }
+        }
     }
 }
 
-input[type="text"] {
-    border-radius: 5px;
-    padding: 3px;
+.button-cont {
+    margin-bottom: 20px;
+    justify-content: space-evenly;
+
+    #save-button {
+        padding: 10px;
+        border-radius: 5px;
+    }
 }
     
 </style>
