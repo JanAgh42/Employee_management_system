@@ -25,17 +25,17 @@
 </template>
 <script setup lang="ts">
     import { useStore } from 'vuex';
-    import { ref } from 'vue';
-
+    import { ref, computed } from 'vue';
     import EmployeeEntry from '../components/EmployeeEntry.vue';
     import TableComp from '../components/TableComp.vue';
     import ArchiveDialog from '../modals/ArchiveDialog.vue';
 
     const store = useStore();
-
+    
     let modalVisible = ref(false);
-
     let chosenUserId : any = ref(null);
+
+    const data = computed(() => store.getters.getCurrentEmployees);
 
     const toggleModal = (): boolean => modalVisible.value = !modalVisible.value;
 
@@ -56,27 +56,6 @@
         toggleModal();
         eraseId();
     }
-    
-    const data = ref([
-        {
-            id: 1,
-            firstName: 'f1',
-            lastName: 'l1',
-            position: 'pos1'
-        },
-        {
-            id: 2,
-            firstName: 'f2',
-            lastName: 'l2',
-            position: 'pos2'
-        },
-        {
-            id: 3,
-            firstName: 'f3',
-            lastName: 'l3',
-            position: 'pos3'
-        },
-    ]);
 
 </script>
 <style scoped lang="scss">

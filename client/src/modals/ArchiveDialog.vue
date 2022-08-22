@@ -21,9 +21,9 @@
 
 <script setup lang="ts">
 
-defineProps<{
-    deleteOnly: boolean
-}>();
+    defineProps<{
+        deleteOnly: boolean
+    }>();
 
 </script>
 <style scoped lang="scss">

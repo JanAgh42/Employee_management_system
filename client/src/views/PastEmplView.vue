@@ -9,7 +9,7 @@
                     <th>Delete user</th>
                 </template>
                 <template v-slot:table-body>
-                        <EmployeeEntry v-for="entry in items" :key="entry.id" :fName="entry.firstName" date="15.6." :lName="entry.lastName" :position="entry.position" :id="entry.id" @modal="initModal"/>
+                        <EmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" date="15.6." :lName="entry.lastName" :position="entry.position" :id="entry.id" @modal="initModal"/>
                 </template>
             </TableComp>
         </div>
@@ -21,12 +21,17 @@
 import TableComp from '../components/TableComp.vue';
 import EmployeeEntry from '../components/EmployeeEntry.vue';
 import ArchiveDialog from '../modals/ArchiveDialog.vue';
+import { useStore } from 'vuex';
 
-import { ref, computed } from 'vue';
+import { ref, computed} from 'vue';
 
     let modalVisible = ref(false);
 
     let chosenUserId : any = ref(null);
+
+    const store = useStore();
+
+    const data = computed(() => store.getters.getPastEmployees);
 
     const toggleModal = (): boolean => modalVisible.value = !modalVisible.value;
 
@@ -48,31 +53,6 @@ import { ref, computed } from 'vue';
         eraseId();
     }
 
-const data = ref([
-        {
-            id: 1,
-            firstName: 'f1',
-            lastName: 'l1',
-            position: 'pos1',
-            past: true
-        },
-        {
-            id: 2,
-            firstName: 'f2',
-            lastName: 'l2',
-            position: 'pos2',
-            past: false
-        },
-        {
-            id: 3,
-            firstName: 'f3',
-            lastName: 'l3',
-            position: 'pos3',
-            past: true
-        },
-    ]);
-
-    const items = computed(() => data.value.filter(person => person.past === true));
 
 </script>
 <style lang="scss">
