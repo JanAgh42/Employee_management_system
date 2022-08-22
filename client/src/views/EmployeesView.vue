@@ -13,11 +13,15 @@
                 <th>Delete user</th>          
             </template>
             <template v-slot:table-body>
-                <EmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" :lName="entry.lastName" :position="entry.position" :id="entry.id"/>
+                <EmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" :lName="entry.lastName" :position="entry.position" :id="entry.id" @modal="initModal"/>
             </template>
         </TableComp>
-        <ArchiveDialog/>
     </div>
+    <teleport to='#modal-container'>
+        <ArchiveDialog v-if="modalVisible" :deleteOnly="false" @hide="toggleModal(), eraseId()" @delete="deleteUser" @archive="archiveUser">
+            Would you like to archive this employee?
+        </ArchiveDialog>
+    </teleport>
 </template>
 <script setup lang="ts">
     import { useStore } from 'vuex';
@@ -28,6 +32,30 @@
     import ArchiveDialog from '../modals/ArchiveDialog.vue';
 
     const store = useStore();
+
+    let modalVisible = ref(false);
+
+    let chosenUserId : any = ref(null);
+
+    const toggleModal = (): boolean => modalVisible.value = !modalVisible.value;
+
+    const eraseId = (): null => chosenUserId.value = null;
+
+    const initModal = (id: number): void => {
+        toggleModal();
+
+        chosenUserId.value = id;
+    }
+
+    const deleteUser = (): void => {
+        toggleModal();
+        eraseId();
+    }
+
+    const archiveUser = (): void => {
+        toggleModal();
+        eraseId();
+    }
     
     const data = ref([
         {

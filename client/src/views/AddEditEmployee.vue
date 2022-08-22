@@ -9,37 +9,37 @@
         <div class="name-section flex">
              <div class="input-field">
                 <label for="firstname">Firstname: </label>
-                <input type="text" name="firstname"/>
+                <input type="text" name="firstname" :disabled="viewOnly"/>
             </div>
             <div class="input-field">
                 <label for="lastname">Lastname: </label>
-                <input type="text" name="lastname"/>
+                <input type="text" name="lastname" :disabled="viewOnly"/>
             </div>
         </div>
         <div class="name-section">
             <div class="input-field">
                 <label for="adress">Address: </label>
-                <input type="text" name="address"/>
+                <input type="text" name="address" :disabled="viewOnly"/>
             </div>
         </div>
         <div class="name-section flex">
              <div class="input-field">
                 <label for="dateofbirth">Date of birth: </label>
-                <input type="text" name="dateofbirth"/>
+                <input type="text" name="dateofbirth" :disabled="viewOnly"/>
             </div>
             <div class="input-field">
                 <label for="workingsince">Working since: </label>
-                <input type="text" name="workingsince"/>
+                <input type="text" name="workingsince" :disabled="viewOnly"/>
             </div>
         </div>
         <div class="name-section flex">
              <div class="input-field">
                 <label for="position">Position: </label>
-                <input type="text" name="dateofbirth"/>
+                <input type="text" name="position" :disabled="viewOnly"/>
             </div>
             <div class="input-field">
-                <label for="workingsince">Salary: </label>
-                <input type="text" name="workingsince"/>
+                <label for="salary">Salary: </label>
+                <input type="text" name="salary" :disabled="viewOnly"/>
             </div>
         </div>
     </div>
@@ -50,10 +50,6 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 const viewOnly = computed(() => useRoute().params.action === 'view');
-
-/* TODO repair go-back
-
-function returnBack() { useRouter().go(-1); }*/
 
 </script>
 
@@ -77,6 +73,7 @@ function returnBack() { useRouter().go(-1); }*/
             padding: 3px;
             border-style: none;
             border-bottom: 1px solid black;
+            background-color: rgb(255, 255, 255);
 
             &:focus {
                 outline: none;

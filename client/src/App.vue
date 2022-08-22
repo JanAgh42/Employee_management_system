@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import NavigationComp from './components/NavigationComp.vue';
-
 </script>
 
 <template>
