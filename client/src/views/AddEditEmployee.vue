@@ -79,6 +79,8 @@
 .modal {
     padding: 20px;
     min-width: 800px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
 }
 .name-section {
     padding-bottom: 10px;
@@ -94,12 +96,15 @@
         label {
             align-self: flex-start;
             margin-bottom: 5px;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
         }
 
         input[type="text"] {
+            font-family: 'Ubuntu', sans-serif;
             padding: 6px;
             border-style: none;
-            background-color: rgb(231, 229, 229);
+            background-color: rgb(255, 255, 255);
             border-radius: 7px;
 
             &:focus {
@@ -112,11 +117,6 @@
 .button-cont {
     margin-bottom: 20px;
     justify-content: space-evenly;
-
-    #save-button {
-        padding: 10px;
-        border-radius: 5px;
-    }
 }
     
 </style>

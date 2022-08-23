@@ -1,13 +1,18 @@
 <template>
     <nav class="navigation flex">
-        <div class="nav-element">
-            <router-link to="/">Employees</router-link>
+        <div class="logo flex">
+            <img src="../assets/logo-white.png" alt="Vue logo">
         </div>
-        <div class="nav-element">
-            <router-link to="/pastempl">Past employees</router-link>
-        </div>
-        <div class="nav-element">
-            <router-link to="/positions">Positions</router-link>
+        <div class="nav-content flex">
+            <div class="nav-element flex">
+                <router-link to="/">Employees</router-link>
+            </div>
+            <div class="nav-element flex">
+                <router-link to="/pastempl">Past employees</router-link>
+            </div>
+            <div class="nav-element flex">
+                <router-link to="/positions">Positions</router-link>
+            </div>
         </div>
     </nav>
 </template>
@@ -20,15 +25,34 @@
     justify-content: center;
     padding: 20px 0;
     margin-bottom: 30px;
-    box-shadow: 1px 1px 6px rgb(110, 110, 110);
-    background-color: rgb(68, 144, 221);
-    .nav-element {
+
+    .logo {
         flex: 1;
+        //align-items: center;
+        justify-content: center;
+
+        img {
+            width: 30px;
+        }
+    }
+
+    .nav-content {
+        flex: 7;
+        justify-content: flex-start;
+    }
+
+    .nav-element {
+        margin-right: 50px;
+        justify-content: center;
+        align-items: center;
+
+        .router-link-active {
+            color: rgb(255, 255, 255);
+        }
 
         a {
             text-decoration: none;
             color: rgb(230, 228, 228);
-            font-weight: bold;
 
             &:hover {
                 color: rgb(255, 255, 255);

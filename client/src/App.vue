@@ -12,10 +12,21 @@
 </template>
 
 <style lang="scss">
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: 'Ubuntu', sans-serif;
+  background: rgb(1,145,103);
+  background: linear-gradient(196deg, rgba(1,145,103,1) 0%, rgba(11,172,124,1) 30%, rgba(64,255,198,1) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .flex {
@@ -37,7 +48,6 @@
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -45,33 +55,37 @@
 }
 
 .button {
+  cursor: pointer;
   border: transparent;
+  padding: 10px 20px;
   font-weight: bold;
   color: rgb(255, 255, 255);
 }
 
 .primary-button {
-  border-radius: 10px;
-  background-color: rgb(18, 107, 196);
+  border-radius: 5px;
+  font-weight: bold;
+  color: #0bac7c;
+  background-color: rgb(255, 255, 255);
   max-width: 200px;
 
   &:hover {
-    background-color: rgb(15, 94, 173);
+    background-color: rgb(236, 236, 236);
   }
 }
 
 .misc-button {
-  padding: 10px;
   border-radius: 5px;
-  background-color: rgb(182, 182, 182);
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.6);
 
   &:hover {
-    background-color: rgb(151, 151, 151);
+    background-color: rgb(255, 255, 255);
+    color: #0bac7c;
   }     
 }
 
 .delete-button {
-  padding: 10px;
   border-radius: 5px;
   background-color: rgb(255, 0, 0);
 
@@ -86,9 +100,9 @@
 
   th {
     padding: 10px 50px;
-    border: 1px solid black;
-    background-color: rgb(68, 144, 221);
+    background-color: rgba(255, 255, 255, 0.4);
     color: rgb(255,255,255);
+    border-bottom: none;
   }
 }
 
@@ -96,6 +110,10 @@
   text-decoration: none;
   font-weight: 600;
   color: black;
+}
+
+h1, h4 {
+  color: rgb(255, 255, 255);
 }
 
 </style>
