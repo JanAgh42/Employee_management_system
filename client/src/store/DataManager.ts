@@ -2,8 +2,35 @@ import { Employee } from '../models/TypesCollection';
 
 export const DataManager = {
     state: {
-        data: [
-            {
+        data: []
+    },
+    mutations: {
+        RETRIEVE_DATA(state: any, data: Employee[]) {
+            state.data = data;
+        }
+    },
+    actions: {
+        async RETRIEVE_DATA({ commit }: { commit: Function }) {
+            const response = await fetch('http://localhost:5000/Employee');
+            
+            const data = await response.json();
+            commit('RETRIEVE_DATA', data);
+        }
+    },
+    getters: {
+        getCurrentEmployees(state: any): Employee[] {
+            return state.data.filter((entry: Employee) => !entry.past);
+        },
+        getPastEmployees(state: any): Employee[] {
+            return state.data.filter((entry: Employee) => entry.past);
+        },
+        getSpecificEmployee(state: any): Function {
+            return (id: number) => state.data.find((entry: Employee) => entry.id === id);
+        }
+    }
+}
+
+/* {
                 id: 1,
                 firstName: 'f1',
                 lastName: 'l1',
@@ -34,21 +61,4 @@ export const DataManager = {
                 address: 'example',
                 position: 'pos3',
                 past: true
-            }
-        ]
-    },
-    mutations: {
-    },
-    actions: {},
-    getters: {
-        getCurrentEmployees(state: any): Employee[] {
-            return state.data.filter((entry: Employee) => !entry.past);
-        },
-        getPastEmployees(state: any): Employee[] {
-            return state.data.filter((entry: Employee) => entry.past);
-        },
-        getSpecificEmployee(state: any): Function {
-            return (id: number) => state.data.find((entry: Employee) => entry.id === id);
-        }
-    }
-}
+            }*/

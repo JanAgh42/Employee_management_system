@@ -43,7 +43,7 @@
 
         #new-empl-button {
             position: absolute;
-            top: 20px;
+            top: 25px;
             right: 60px;
             font-size: 1rem;
             padding: 10px 25px;

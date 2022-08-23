@@ -3,7 +3,6 @@
     <div class="dialog flex column">
         <h4>
             <slot></slot>
-            <h4>{{num}}</h4>
         </h4>
         <div class="dialog-buttons flex">
             <div class="d-button" v-if="!deleteOnly">
@@ -23,11 +22,13 @@
 <script setup lang="ts">
 
     import { useStore } from 'vuex';
-    import { ref, computed } from 'vue';
+    import { computed } from 'vue';
+
+    defineProps<{
+        deleteOnly: boolean
+    }>();
 
     const store = useStore();
-
-    const num = computed(() => store.state.DialogManager.retrievedEmployeeId);
 
     const loadInitialState = (): void => {
         store.commit('CLEAR_USER_ID');
@@ -45,11 +46,6 @@
     const cancel = (): void => {
         loadInitialState();
     }
-
-    defineProps<{
-        deleteOnly: boolean
-    }>();
-
 </script>
 <style scoped lang="scss">
 

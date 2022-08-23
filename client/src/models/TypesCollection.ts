@@ -2,10 +2,10 @@ export interface Employee {
     id: number
     firstName: string,
     lastName: string,
-    address: string,
+    //address: string,
    /* dateOfBirth: string,
     dateOfWork: string,*/
-    position: string,
+    //position: string,
     //salary: number,
     past: boolean
 }

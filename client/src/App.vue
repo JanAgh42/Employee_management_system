@@ -1,7 +1,3 @@
-<script setup lang="ts">
-  import NavigationComp from './components/NavigationComp.vue';
-</script>
-
 <template>
   <NavigationComp/>
   <div class="wrapper flex">
@@ -10,6 +6,16 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+  import { useStore } from 'vuex';
+  import NavigationComp from './components/NavigationComp.vue';
+
+  const store = useStore();
+
+  store.dispatch('RETRIEVE_DATA');
+
+</script>
 
 <style lang="scss">
 
