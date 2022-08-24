@@ -1,5 +1,4 @@
 <template>
-        <h1>Past employees</h1>
         <div class="table-content flex">
             <TableComp>
                 <template v-slot:table-header>

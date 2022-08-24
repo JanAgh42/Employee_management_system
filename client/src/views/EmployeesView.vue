@@ -34,10 +34,10 @@
 
     const data = computed(() => store.getters.getCurrentEmployees);
     const modal = computed(() => store.state.DialogManager.dialogVisibility);
+    const dataLength = computed(() => data.value.length === 0);
 
 </script>
 <style scoped lang="scss">
-
     .btn-cont{
         justify-content: center;
 

@@ -12,8 +12,8 @@ export const DataManager = {
     actions: {
         async RETRIEVE_DATA({ commit }: { commit: Function }) {
             const response = await fetch('http://localhost:5000/Employee');
-            
             const data = await response.json();
+            
             commit('RETRIEVE_DATA', data);
         }
     },

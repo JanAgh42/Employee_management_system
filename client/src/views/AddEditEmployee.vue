@@ -67,8 +67,8 @@
             id: -1,
             firstName: '',
             lastName: '',
-            address: '',
-            position: '',
+            //address: '',
+            //position: '',
             past: false
         };
     }
