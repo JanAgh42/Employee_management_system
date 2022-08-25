@@ -2,18 +2,18 @@
 
     <div class="button-cont flex">
         <button class="button misc-button" @click="$router.go(-1)">Return back</button>
-        <button class="button primary-button" id="save-button" v-if="!viewOnly">Save changes</button>
+        <button class="button primary-button" id="save-button" @click="saveChanges" v-if="!viewOnly">Save changes</button>
     </div>
 
     <div class="modal flex column">
         <div class="name-section flex">
              <div class="input-field flex column">
                 <label for="firstname">Firstname: </label>
-                <input type="text" name="firstname" :disabled="viewOnly" :value="employee.firstName"/>
+                <input type="text" name="firstname" :disabled="viewOnly" v-model="employee.firstName" required/>
             </div>
             <div class="input-field flex column">
                 <label for="lastname">Lastname: </label>
-                <input type="text" name="lastname" :disabled="viewOnly"/>
+                <input type="text" name="lastname" :disabled="viewOnly" v-model="employee.lastName" required/>
             </div>
         </div>
         <div class="name-section">
@@ -45,7 +45,7 @@
     </div>
 </template>
 <script setup lang="ts">
-    import { ref, computed } from 'vue';
+    import { reactive, computed } from 'vue';
     import { useRoute } from 'vue-router';
     import { useStore } from 'vuex';
     import { Employee } from '../models/TypesCollection';
@@ -59,18 +59,25 @@
 
     if(route.params.id !== 'new'){
         employeeId = Number(route.params.id);
-        employee = ref(store.getters.getSpecificEmployee(employeeId));
+        employee = reactive(JSON.parse(JSON.stringify(store.getters.getSpecificEmployee(employeeId))));
     }
     else {
         employeeId = -1;
-        employee = {
-            id: -1,
+        employee = reactive({
+            id: 0,
             firstName: '',
             lastName: '',
-            //address: '',
-            //position: '',
             past: false
-        };
+        });
+    }
+
+    const saveChanges = (): void => {
+        if(route.params.id === 'new'){
+            store.dispatch('POST_DATA', employee);
+        }
+        else {
+            store.dispatch('');
+        }
     }
 </script>
 

@@ -11,8 +11,15 @@ namespace WebApi.Data {
 
         public EmployeesManagementContext(DbContextOptions<EmployeesManagementContext> options) : base(options) { }
 
-        public Task<List<Employee>> ReturnAllEmployees() {
-            return Employees.ToListAsync();
+        public async Task<List<Employee>> ReturnAllEmployees() {
+            return await Employees.ToListAsync();
+        }
+
+        public async Task<List<Employee>> AddNewEmployee(Employee employee) {
+            Employees.Add(employee);
+            await this.SaveChangesAsync();
+
+            return await ReturnAllEmployees();
         }
     }
 }

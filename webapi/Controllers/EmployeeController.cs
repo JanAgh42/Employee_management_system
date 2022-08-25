@@ -22,13 +22,13 @@ namespace WebApi.Controllers {
 		}
 
         [HttpGet]
-        public async Task<ActionResult<List<Employee>>> GetEmployees() {
+        public async Task<IActionResult> GetEmployees() {
             return Ok(await _context.ReturnAllEmployees());
         }
 
         [HttpPost]
-        public void Post() {
-
+        public async Task<IActionResult> Post(Employee employee) {
+            return Ok(await _context.AddNewEmployee(employee));
         }
 
         [HttpDelete]

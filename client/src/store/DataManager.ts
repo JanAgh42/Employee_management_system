@@ -5,16 +5,29 @@ export const DataManager = {
         data: []
     },
     mutations: {
-        RETRIEVE_DATA(state: any, data: Employee[]) {
+        GET_DATA(state: any, data: Employee[]) {
             state.data = data;
         }
     },
     actions: {
-        async RETRIEVE_DATA({ commit }: { commit: Function }) {
+        async GET_DATA({ commit }: { commit: Function }) {
             const response = await fetch('http://localhost:5000/Employee');
             const data = await response.json();
             
-            commit('RETRIEVE_DATA', data);
+            commit('GET_DATA', data);
+        },
+        async POST_DATA({ commit }: { commit: Function }, entry: Employee) {
+            const response = await fetch('http://localhost:5000/Employee', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(entry)
+            });
+            const data = await response.json();
+            
+            commit('GET_DATA', data);
         }
     },
     getters: {

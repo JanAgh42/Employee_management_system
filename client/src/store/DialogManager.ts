@@ -13,11 +13,5 @@ export const DialogManager = {
         CLEAR_USER_ID(state: any): void {
             state.retrievedEmployeeId = null;
         }
-    },
-    actions: {
-
-    },
-    getters: {
-
     }
 }

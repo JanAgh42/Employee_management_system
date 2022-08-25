@@ -13,7 +13,7 @@
 
   const store = useStore();
 
-  store.dispatch('RETRIEVE_DATA');
+  store.dispatch('GET_DATA');
 
 </script>
 
