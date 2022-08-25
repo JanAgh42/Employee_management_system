@@ -13,7 +13,7 @@
 
   const store = useStore();
 
-  store.dispatch('GET_DATA');
+  store.dispatch('GET_CURRENT_EMP_DATA');
 
 </script>
 

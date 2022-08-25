@@ -13,7 +13,7 @@
                 <th>Delete employee</th>          
             </template>
             <template v-slot:table-body>
-                <EmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" :lName="entry.lastName" :position="entry.position" :id="entry.id"/>
+                <EmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" :lName="entry.lastName" :position="entry.position" :id="entry.id" :past="false"/>
             </template>
         </TableComp>
     </div>
@@ -32,9 +32,8 @@
 
     const store = useStore();
 
-    const data = computed(() => store.getters.getCurrentEmployees);
+    const data = computed(() => store.state.DataManager.currentData);
     const modal = computed(() => store.state.DialogManager.dialogVisibility);
-    const dataLength = computed(() => data.value.length === 0);
 
 </script>
 <style scoped lang="scss">

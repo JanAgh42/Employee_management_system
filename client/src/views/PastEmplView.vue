@@ -8,7 +8,7 @@
                     <th>Delete user</th>
                 </template>
                 <template v-slot:table-body>
-                        <EmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" date="15.6." :lName="entry.lastName" :position="entry.position" :id="entry.id"/>
+                        <EmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" date="15.6." :lName="entry.lastName" :position="entry.position" :id="entry.id" :past="true"/>
                 </template>
             </TableComp>
         </div>
@@ -27,8 +27,12 @@ import { ref, computed} from 'vue';
 
     const store = useStore();
 
-    const data = computed(() => store.getters.getPastEmployees);
+    const data = computed(() => store.state.DataManager.pastData);
     const modal = computed(() => store.state.DialogManager.dialogVisibility);
+
+    if(data.value.length === 0){
+        store.dispatch('GET_PAST_EMP_DATA');
+    }
 
 </script>
 <style lang="scss">

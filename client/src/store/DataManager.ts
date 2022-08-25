@@ -1,77 +1,54 @@
 import { Employee } from '../models/TypesCollection';
 
+const callAPI = async (URL: string, method: string, body?: any): Promise<any> => {
+    const response = await fetch(URL, {
+                method,
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            return await response.json();
+}
+
 export const DataManager = {
     state: {
-        data: []
+        currentData: [],
+        pastData: []
     },
     mutations: {
-        GET_DATA(state: any, data: Employee[]) {
-            state.data = data;
+        GET_CURRENT_EMP_DATA(state: any, data: Employee[]) {
+            state.currentData = data;
+        },
+        GET_PAST_EMP_DATA(state: any, data: Employee[]){
+            state.pastData = data;
         }
     },
     actions: {
-        async GET_DATA({ commit }: { commit: Function }) {
-            const response = await fetch('http://localhost:5000/Employee');
-            const data = await response.json();
-            
-            commit('GET_DATA', data);
+        GET_CURRENT_EMP_DATA({ commit }: { commit: Function }) {
+            callAPI('http://localhost:5000/current', 'GET').then(data => commit('GET_CURRENT_EMP_DATA', data));
         },
-        async POST_DATA({ commit }: { commit: Function }, entry: Employee) {
-            const response = await fetch('http://localhost:5000/Employee', {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(entry)
-            });
-            const data = await response.json();
-            
-            commit('GET_DATA', data);
+        GET_PAST_EMP_DATA({ commit }: { commit: Function }) {
+            callAPI('http://localhost:5000/past', 'GET').then(data => commit('GET_PAST_EMP_DATA', data));
+        },
+        POST_DATA({ commit }: { commit: Function }, entry: Employee) {
+            callAPI('http://localhost:5000/Employee', 'POST', entry).then(data => commit('GET_CURRENT_EMP_DATA', data));
+        },
+        DELETE_CURRENT_EMP({ commit }: { commit: Function }, id: number) {
+            callAPI('http://localhost:5000/Employee/' + id, 'DELETE').then(data => commit('GET_CURRENT_EMP_DATA', data));
+        },
+        DELETE_PAST_EMP({ commit }: { commit: Function }, id: number) {
+            callAPI('http://localhost:5000/Employee/' + id, 'DELETE').then(data => commit('GET_PAST_EMP_DATA', data));
+        },
+        EDIT_CURRENT_EMP({ commit }: { commit: Function }, entry: Employee) {
+            callAPI('http://localhost:5000/Employee', 'PUT', entry).then(data => commit('GET_CURRENT_EMP_DATA', data));
         }
     },
     getters: {
-        getCurrentEmployees(state: any): Employee[] {
-            return state.data.filter((entry: Employee) => !entry.past);
-        },
-        getPastEmployees(state: any): Employee[] {
-            return state.data.filter((entry: Employee) => entry.past);
-        },
         getSpecificEmployee(state: any): Function {
-            return (id: number) => state.data.find((entry: Employee) => entry.id === id);
+            return (id: number,  past: boolean) => {
+                return past ? state.pastData.find((entry: Employee) => entry.id === id) : 
+                state.currentData.find((entry: Employee) => entry.id === id);
+            };
         }
     }
 }
-
-/* {
-                id: 1,
-                firstName: 'f1',
-                lastName: 'l1',
-                address: 'example',
-                position: 'pos1',
-                past: false
-            },
-            {
-                id: 2,
-                firstName: 'f2',
-                lastName: 'l2',
-                address: 'example',
-                position: 'pos2',
-                past: true
-            },
-            {
-                id: 3,
-                firstName: 'f3',
-                lastName: 'l3',
-                address: 'example',
-                position: 'pos3',
-                past: false
-            },
-            {
-                id: 4,
-                firstName: 'f4',
-                lastName: 'l4',
-                address: 'example',
-                position: 'pos3',
-                past: true
-            }*/

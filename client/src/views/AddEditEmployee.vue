@@ -55,11 +55,13 @@
 
     let employeeId: number, employee: Employee;
 
-    const viewOnly = computed(() => route.params.action === 'view');
+    const isPast: boolean = route.params.action === 'past';
+
+    const viewOnly = computed(() => isPast || route.params.action === 'current');
 
     if(route.params.id !== 'new'){
         employeeId = Number(route.params.id);
-        employee = reactive(JSON.parse(JSON.stringify(store.getters.getSpecificEmployee(employeeId))));
+        employee = reactive(JSON.parse(JSON.stringify(store.getters.getSpecificEmployee(employeeId, isPast))));
     }
     else {
         employeeId = -1;
@@ -76,7 +78,7 @@
             store.dispatch('POST_DATA', employee);
         }
         else {
-            store.dispatch('');
+            store.dispatch('EDIT_CURRENT_EMP', employee);
         }
     }
 </script>

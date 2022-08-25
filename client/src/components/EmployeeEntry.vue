@@ -1,14 +1,13 @@
 <template>
     <tr>
         <td>
-            <router-link :to="{path: '/employee/view/' + id}" class="entry-name">{{fullName}}</router-link>
+            <router-link :to="{path: '/employee/' + (date ? 'past/' : 'current/') + id}" class="entry-name">{{fullName}}</router-link>
         </td>
         <td>{{date ? date : position}}</td>
         <td v-if="!date">
             <router-link :to="{path: '/employee/edit/' + id}">
                 <button class="button misc-button">Edit</button>
             </router-link>
-
         </td>
         <td v-else>{{position}}</td>
         <td>
@@ -24,7 +23,7 @@ const store = useStore();
 
 const toggle = (): void => {
     store.commit('TOGGLE_DIALOG');
-    store.commit('LOAD_USER_ID', props.id);
+    store.commit('LOAD_USER_ID', {id: props.id, past: props.past});
 }
 
 const props = defineProps<{
@@ -32,7 +31,8 @@ const props = defineProps<{
     fName: string,
     lName: string,
     position: string,
-    date?: string
+    date?: string,
+    past: boolean
     }>();
 
 const fullName = computed(() => props.fName + " " + props.lName);

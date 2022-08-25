@@ -22,7 +22,7 @@
 <script setup lang="ts">
 
     import { useStore } from 'vuex';
-    import { computed } from 'vue';
+    import { Employee } from '../models/TypesCollection';
 
     defineProps<{
         deleteOnly: boolean
@@ -30,16 +30,27 @@
 
     const store = useStore();
 
+    const employeeId: number = store.state.DialogManager.employeeInfo.retrievedEmployeeId;
+    const isPastEmployee: boolean = store.state.DialogManager.employeeInfo.isPastEmployee;
+
     const loadInitialState = (): void => {
         store.commit('CLEAR_USER_ID');
         store.commit('TOGGLE_DIALOG');
     }
 
     const archiveEmp = (): void => {
+        const employee: Employee = JSON.parse(JSON.stringify(store.getters.getSpecificEmployee(employeeId, false)));
+        employee.past = true;
+        store.dispatch('EDIT_CURRENT_EMP', employee);
+
+        if(store.state.DataManager.pastData.length !== 0){
+            store.dispatch('GET_PAST_EMP_DATA');
+        }
         loadInitialState();
     }
 
     const deleteEmp = (): void => {
+        store.dispatch(isPastEmployee ? 'DELETE_PAST_EMP' : 'DELETE_CURRENT_EMP', employeeId);
         loadInitialState();
     }
 
