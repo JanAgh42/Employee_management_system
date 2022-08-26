@@ -5,22 +5,26 @@
       <router-view></router-view>
     </div>
   </div>
+  <teleport to='#modal-container'>
+        <ConfirmDialog v-if="confirmModal"/>
+    </teleport>
 </template>
 
 <script setup lang="ts">
   import { useStore } from 'vuex';
+  import { computed } from 'vue';
   import NavigationComp from './components/NavigationComp.vue';
+  import ConfirmDialog from './modals/ConfirmDialog.vue';
 
   const store = useStore();
 
   store.dispatch('GET_CURRENT_EMP_DATA');
 
+  const confirmModal = computed(() => store.state.DialogManager.confirmDialogVisibility);
+
 </script>
 
 <style lang="scss">
-
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
-
 * {
   margin: 0;
   padding: 0;
@@ -33,14 +37,6 @@ body {
   background: linear-gradient(196deg, rgba(1,145,103,1) 0%, rgba(11,172,124,1) 30%, rgba(64,255,198,1) 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
-}
-
-.flex {
-  display: flex;
-}
-
-.column {
-  flex-direction: column;
 }
 
 .container {
@@ -59,67 +55,4 @@ body {
   text-align: center;
   color: #2c3e50;
 }
-
-.button {
-  cursor: pointer;
-  border: transparent;
-  padding: 10px 20px;
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-}
-
-.primary-button {
-  border-radius: 5px;
-  font-weight: bold;
-  color: #0bac7c;
-  background-color: rgb(255, 255, 255);
-  max-width: 200px;
-
-  &:hover {
-    background-color: rgb(236, 236, 236);
-  }
-}
-
-.misc-button {
-  border-radius: 5px;
-  background-color: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.6);
-
-  &:hover {
-    background-color: rgb(255, 255, 255);
-    color: #0bac7c;
-  }     
-}
-
-.delete-button {
-  border-radius: 5px;
-  background-color: rgb(255, 0, 0);
-
-  &:hover {
-    background-color: rgb(212, 2, 2);
-  }
-}
-
-.table-content {
-  justify-content: center;
-  margin-top: 20px;
-
-  th {
-    padding: 10px 50px;
-    background-color: rgba(255, 255, 255, 0.4);
-    color: rgb(255,255,255);
-    border-bottom: none;
-  }
-}
-
-.entry-name {
-  text-decoration: none;
-  font-weight: 600;
-  color: black;
-}
-
-h1, h4 {
-  color: rgb(255, 255, 255);
-}
-
 </style>

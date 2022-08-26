@@ -58,6 +58,7 @@
     const isPast: boolean = route.params.action === 'past';
 
     const viewOnly = computed(() => isPast || route.params.action === 'current');
+    const text = 'Required inputs were left empty.';
 
     if(route.params.id !== 'new'){
         employeeId = Number(route.params.id);
@@ -75,11 +76,18 @@
 
     const saveChanges = (): void => {
         if(route.params.id === 'new'){
-            store.dispatch('POST_DATA', employee);
+            validateData() ? store.dispatch('POST_DATA', employee) : store.commit('TOGGLE_CONFIRM_DIALOG', text);
         }
         else {
-            store.dispatch('EDIT_CURRENT_EMP', employee);
+            validateData() ? store.dispatch('EDIT_CURRENT_EMP', employee) : store.commit('TOGGLE_CONFIRM_DIALOG', text);
         }
+    }
+
+    const validateData = (): boolean => {
+        employee.firstName = employee.firstName.trim();
+        employee.lastName = employee.lastName.trim();
+
+        return employee.firstName !== '' && employee.lastName !== '';
     }
 </script>
 

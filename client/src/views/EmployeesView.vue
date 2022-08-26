@@ -1,7 +1,7 @@
 <template>
     <div class="btn-cont flex">
         <router-link to="/employee/add/new">
-            <button class="button primary-button" id="new-empl-button">+ new employee</button>
+            <button class="button primary-button" id="new-entry-button">+ new employee</button>
         </router-link>
     </div>
     <div class="table-content flex">
@@ -13,12 +13,12 @@
                 <th>Delete employee</th>          
             </template>
             <template v-slot:table-body>
-                <EmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" :lName="entry.lastName" :position="entry.position" :id="entry.id" :past="false"/>
+                <EmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" :lName="entry.lastName" :position="entry.position" :id="entry.id"/>
             </template>
         </TableComp>
     </div>
     <teleport to='#modal-container'>
-        <ArchiveDialog v-if="modal" :deleteOnly="false">
+        <ArchiveDialog v-if="archiveModal">
             Would you like to archive this employee?
         </ArchiveDialog>
     </teleport>
@@ -29,18 +29,19 @@
     import EmployeeEntry from '../components/EmployeeEntry.vue';
     import TableComp from '../components/TableComp.vue';
     import ArchiveDialog from '../modals/ArchiveDialog.vue';
+    import ConfirmDialog from '../modals/ConfirmDialog.vue';
 
     const store = useStore();
 
     const data = computed(() => store.state.DataManager.currentData);
-    const modal = computed(() => store.state.DialogManager.dialogVisibility);
+    const archiveModal = computed(() => store.state.DialogManager.archiveDialogVisibility);
 
 </script>
 <style scoped lang="scss">
     .btn-cont{
         justify-content: center;
 
-        #new-empl-button {
+        #new-entry-button {
             position: absolute;
             top: 25px;
             right: 60px;

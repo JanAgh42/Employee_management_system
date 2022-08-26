@@ -28,7 +28,6 @@
 
     .logo {
         flex: 1;
-        //align-items: center;
         justify-content: center;
 
         img {

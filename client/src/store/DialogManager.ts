@@ -1,22 +1,16 @@
 export const DialogManager = {
     state: {
-        dialogVisibility: false,
-        employeeInfo: {
-            retrievedEmployeeId: null,
-            isPastEmployee: null
-        }
+        archiveDialogVisibility: false,
+        confirmDialogVisibility: false,
+        confirmDialogText: ''
     },
     mutations: {
-        TOGGLE_DIALOG(state: any): void {
-            state.dialogVisibility = !state.dialogVisibility;
+        TOGGLE_ARCHIVE_DIALOG(state: any): void {
+            state.archiveDialogVisibility = !state.archiveDialogVisibility;
         },
-        LOAD_USER_ID(state: any, employeeInfo: {id: number, past: boolean}): void {
-            state.employeeInfo.retrievedEmployeeId = employeeInfo.id;
-            state.employeeInfo.isPastEmployee = employeeInfo.past;
-        },
-        CLEAR_USER_ID(state: any): void {
-            state.employeeInfo.retrievedEmployeeId = null;
-            state.employeeInfo.isPastEmployee = null;
+        TOGGLE_CONFIRM_DIALOG(state: any, text: string): void {
+            state.confirmDialogText = text;
+            state.confirmDialogVisibility = !state.confirmDialogVisibility;
         }
     }
 }
