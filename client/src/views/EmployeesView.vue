@@ -29,11 +29,10 @@
     import EmployeeEntry from '../components/EmployeeEntry.vue';
     import TableComp from '../components/TableComp.vue';
     import ArchiveDialog from '../modals/ArchiveDialog.vue';
-    import ConfirmDialog from '../modals/ConfirmDialog.vue';
 
     const store = useStore();
 
-    const data = computed(() => store.state.DataManager.currentData);
+    const data = computed(() => store.state.CurrEmpManager.currentData);
     const archiveModal = computed(() => store.state.DialogManager.archiveDialogVisibility);
 
 </script>

@@ -38,7 +38,7 @@
         employee.past = true;
         store.dispatch('EDIT_CURRENT_EMP', employee);
 
-        if(store.state.DataManager.pastData.length !== 0){
+        if(store.state.PastEmpManager.pastData.length !== 0){
             store.dispatch('GET_PAST_EMP_DATA');
         }
         loadInitialState();

@@ -8,12 +8,17 @@ using System.Linq;
 namespace WebApi.Data {
     public class EmployeesManagementContext : DbContext {
 
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Employee> Employees { get; set; } = null!;
+        public DbSet<Position> Positions { get; set; } = null!;
 
         public EmployeesManagementContext(DbContextOptions<EmployeesManagementContext> options) : base(options) { }
 
         public async Task<List<Employee>> ReturnEmployees(bool Past) {
             return await Employees.Where(Employee => Employee.Past == Past).ToListAsync();
+        }
+
+        public async Task<List<Position>> ReturnPositions() {
+            return await Positions.ToListAsync();
         }
 
         public async Task<List<Employee>> AddNewEmployee(Employee employee) {

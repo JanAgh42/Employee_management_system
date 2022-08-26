@@ -27,7 +27,7 @@ import { ref, computed} from 'vue';
 
     const store = useStore();
 
-    const data = computed(() => store.state.DataManager.pastData);
+    const data = computed(() => store.state.PastEmpManager.pastData);
     const archiveModal = computed(() => store.state.DialogManager.archiveDialogVisibility);
 
     if(data.value.length === 0){

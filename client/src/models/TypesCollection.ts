@@ -11,5 +11,6 @@ export interface Employee {
 }
 
 export interface Position {
+    id: number,
     name: string
 }

@@ -31,6 +31,11 @@ namespace WebApi.Controllers {
             return Ok(await _context.ReturnEmployees(true));
         }
 
+        [HttpGet("/positions")]
+        public async Task<IActionResult> GetPositions() {
+            return Ok(await _context.ReturnPositions());
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(Employee employee) {
             return Ok(await _context.AddNewEmployee(employee));

@@ -76,7 +76,7 @@
 
     const saveChanges = (): void => {
         if(route.params.id === 'new'){
-            validateData() ? store.dispatch('POST_DATA', employee) : store.commit('TOGGLE_CONFIRM_DIALOG', text);
+            validateData() ? store.dispatch('POST_EMP_DATA', employee) : store.commit('TOGGLE_CONFIRM_DIALOG', text);
         }
         else {
             validateData() ? store.dispatch('EDIT_CURRENT_EMP', employee) : store.commit('TOGGLE_CONFIRM_DIALOG', text);

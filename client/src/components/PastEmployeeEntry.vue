@@ -1,5 +1,5 @@
 <template>
-    <tr class="employee-entry">
+    <tr class="entry">
         <td>
             <router-link :to="{path: '/employee/past/' + id}" class="entry-name">{{fullName}}</router-link>
         </td>
@@ -14,13 +14,6 @@
     import { computed, ref } from 'vue';
     import { useStore } from 'vuex';
 
-const store = useStore();
-
-const toggle = (): void => {
-    store.commit('TOGGLE_ARCHIVE_DIALOG');
-    store.commit('LOAD_USER_ID', {id: props.id, past: true});
-}
-
 const props = defineProps<{
     id: number,
     fName: string,
@@ -28,6 +21,13 @@ const props = defineProps<{
     position: string,
     date: string
     }>();
+
+const store = useStore();
+
+const toggle = (): void => {
+    store.commit('TOGGLE_ARCHIVE_DIALOG');
+    store.commit('LOAD_USER_ID', {id: props.id, past: true});
+}
 
 const fullName = computed(() => props.fName + " " + props.lName);
 </script>
