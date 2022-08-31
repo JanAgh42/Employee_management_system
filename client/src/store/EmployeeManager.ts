@@ -1,18 +1,21 @@
 export const EmployeeManager = {
     state: {
-        employeeInfo: {
+        entryInfo: {
             retrievedEmployeeId: null,
-            isPastEmployee: null
+            isPastEmployee: null,
+            isPosition: null
         }
     },
     mutations: {
-        LOAD_USER_ID(state: any, employeeInfo: {id: number, past: boolean}): void {
-            state.employeeInfo.retrievedEmployeeId = employeeInfo.id;
-            state.employeeInfo.isPastEmployee = employeeInfo.past;
+        LOAD_USER_ID(state: any, entryInfo: {id: number, past: boolean, position?: boolean}): void {
+            state.entryInfo.retrievedEmployeeId = entryInfo.id;
+            state.entryInfo.isPastEmployee = entryInfo.past;
+            state.entryInfo.isPosition = entryInfo.position;
         },
         CLEAR_USER_ID(state: any): void {
-            state.employeeInfo.retrievedEmployeeId = null;
-            state.employeeInfo.isPastEmployee = null;
+            state.entryInfo.retrievedEmployeeId = null;
+            state.entryInfo.isPastEmployee = null;
+            state.entryInfo.isPosition = null
         }
     }
 }

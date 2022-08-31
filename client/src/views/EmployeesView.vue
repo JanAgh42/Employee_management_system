@@ -13,44 +13,21 @@
                 <th>Delete employee</th>          
             </template>
             <template v-slot:table-body>
-                <EmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" :lName="entry.lastName" :position="entry.position" :id="entry.id"/>
+                <EmployeeEntry v-for="entry in data" :key="entry.id"
+                    :fName="entry.firstName" :lName="entry.lastName"
+                    :position="entry.posEntries[entry.posEntries.length - 1].title" :id="entry.id"/>
             </template>
         </TableComp>
     </div>
-    <teleport to='#modal-container'>
-        <ArchiveDialog v-if="archiveModal">
-            Would you like to archive this employee?
-        </ArchiveDialog>
-    </teleport>
 </template>
+
 <script setup lang="ts">
     import { useStore } from 'vuex';
-    import { ref, computed } from 'vue';
+    import { computed } from 'vue';
     import EmployeeEntry from '../components/EmployeeEntry.vue';
     import TableComp from '../components/TableComp.vue';
-    import ArchiveDialog from '../modals/ArchiveDialog.vue';
 
     const store = useStore();
 
     const data = computed(() => store.state.CurrEmpManager.currentData);
-    const archiveModal = computed(() => store.state.DialogManager.archiveDialogVisibility);
-
 </script>
-<style scoped lang="scss">
-    .btn-cont{
-        justify-content: center;
-
-        #new-entry-button {
-            position: absolute;
-            top: 25px;
-            right: 60px;
-            font-size: 1rem;
-            padding: 10px 25px;
-            background-color: rgb(255, 255, 255);
-
-            &:hover {
-                background-color: rgb(236, 236, 236);
-            }
-        }
-    }
-</style>

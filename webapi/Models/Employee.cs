@@ -1,7 +1,12 @@
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace WebApi.Models {
     public class Employee {
+
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -9,9 +14,19 @@ namespace WebApi.Models {
 
         [Required]
         public string LastName { get; set; } = string.Empty;
-        //public string? Address { get; set; } 
-        //public decimal Salary { get; set; }
-        //public DateTime DateOfBirth { get; set; }
+        public string? Address { get; set; } 
+
+        [Required]
+        public decimal Salary { get; set; }
+
+        [Required]
+        public DateTime DateOfBirth { get; set; }
+
+        [Required]
+        public DateTime WorkingSince { get; set; }
+
+        [Required]
+        public List<PosEntry> PosEntries { get; set; } = null!;
 
         [Required]
         public bool Past { get; set; }

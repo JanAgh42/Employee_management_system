@@ -14,29 +14,24 @@
         </td>
     </tr>
 </template>
+
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { useStore } from 'vuex';
+    import { computed } from 'vue';
+    import { useStore } from 'vuex';
 
-const props = defineProps<{
-    id: number,
-    fName: string,
-    lName: string,
-    position: string
-    }>();
+    const props = defineProps<{
+        id: number,
+        fName: string,
+        lName: string,
+        position: string
+        }>();
 
-const store = useStore();
+    const store = useStore();
 
-const toggle = (): void => {
-    store.commit('TOGGLE_ARCHIVE_DIALOG');
-    store.commit('LOAD_USER_ID', {id: props.id, past: false});
-}
+    const fullName = computed(() => props.fName + " " + props.lName);
 
-const fullName = computed(() => props.fName + " " + props.lName);
-
+    const toggle = (): void => {
+        store.commit('TOGGLE_ARCHIVE_DIALOG', 'Would you like to archive this employee?');
+        store.commit('LOAD_USER_ID', {id: props.id, past: false});
+    }
 </script>
-<style scoped lang="scss">
-
-</style>
-
- 

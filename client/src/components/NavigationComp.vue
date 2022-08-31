@@ -16,48 +16,44 @@
         </div>
     </nav>
 </template>
-<script setup lang="ts">
 
-</script>
 <style scoped lang="scss">
-
-.navigation {
-    justify-content: center;
-    padding: 20px 0;
-    margin-bottom: 30px;
-
-    .logo {
-        flex: 1;
+    .navigation {
         justify-content: center;
+        padding: 20px 0;
+        margin-bottom: 30px;
 
-        img {
-            width: 30px;
-        }
-    }
+        .logo {
+            flex: 1;
+            justify-content: center;
 
-    .nav-content {
-        flex: 7;
-        justify-content: flex-start;
-    }
-
-    .nav-element {
-        margin-right: 50px;
-        justify-content: center;
-        align-items: center;
-
-        .router-link-active {
-            color: rgb(255, 255, 255);
-        }
-
-        a {
-            text-decoration: none;
-            color: rgb(230, 228, 228);
-
-            &:hover {
-                color: rgb(255, 255, 255);
+            img {
+                width: 30px;
             }
         }
-    }
-}
-    
+
+        .nav-content {
+            flex: 7;
+            justify-content: flex-start;
+        }
+
+        .nav-element {
+            margin-right: 50px;
+            justify-content: center;
+            align-items: center;
+
+            .router-link-active {
+                color: rgb(255, 255, 255);
+            }
+
+            a {
+                text-decoration: none;
+                color: rgb(230, 228, 228);
+
+                &:hover {
+                    color: rgb(255, 255, 255);
+                }
+            }
+        }
+    }  
 </style>

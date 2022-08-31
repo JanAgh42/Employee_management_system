@@ -1,5 +1,5 @@
-import { Employee } from "../../models/TypesCollection";
-import { callAPI } from "..";
+import { Employee } from "../../utility/TypesCollection";
+import { callAPI } from "../../utility/Miscellaneous";
 
 export const PastEmpManager = {
     state: {
@@ -7,6 +7,10 @@ export const PastEmpManager = {
     },
     mutations: {
         GET_PAST_EMP_DATA(state: any, data: Employee[]) {
+            for(let entry of data){
+                entry.dateOfBirth = new Date(entry.dateOfBirth);
+                entry.workingSince = new Date(entry.workingSince);
+            }
             state.pastData = data;
         }
     },

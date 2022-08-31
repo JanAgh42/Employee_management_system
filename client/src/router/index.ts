@@ -24,6 +24,11 @@ const router = createRouter({
             path: '/employee/:action/:id',
             name: 'employeeInfo',
             component: () => import('../views/AddEditEmployee.vue')
+        },
+        {
+            path: '/positions/new',
+            name: 'newPosition',
+            component: () => import('../views/AddPositionView.vue')
         }
     ]
 });

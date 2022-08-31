@@ -3,38 +3,31 @@
         <TableComp>
             <template v-slot:table-header>
                 <th>Name</th>
-                <th>Date</th>
                 <th>Last position</th>
+                <th>Date</th>
                 <th>Delete user</th>
             </template>
             <template v-slot:table-body>
-                <PastEmployeeEntry v-for="entry in data" :key="entry.id" :fName="entry.firstName" date="15.6." :lName="entry.lastName" :position="entry.position" :id="entry.id"/>
+                <PastEmployeeEntry v-for="entry in data" :key="entry.id" 
+                    :fName="entry.firstName" :date="dateModifier(entry.posEntries[entry.posEntries.length - 1].endDate)" 
+                    :lName="entry.lastName" :position="entry.posEntries[entry.posEntries.length - 1].title" 
+                    :id="entry.id"/>
             </template>
         </TableComp>
     </div>
-    <teleport to='#modal-container'>
-        <ArchiveDialog v-if="archiveModal">
-            Are you sure you want to delete this employee?
-        </ArchiveDialog>
-    </teleport>
 </template>
 <script setup lang="ts">
-import TableComp from '../components/TableComp.vue';
-import PastEmployeeEntry from '../components/PastEmployeeEntry.vue';
-import ArchiveDialog from '../modals/ArchiveDialog.vue';
-import { useStore } from 'vuex';
-import { ref, computed} from 'vue';
+    import { useStore } from 'vuex';
+    import { computed } from 'vue';
+    import { dateModifier } from '../utility/Miscellaneous';
+    import TableComp from '../components/TableComp.vue';
+    import PastEmployeeEntry from '../components/PastEmployeeEntry.vue';
 
     const store = useStore();
 
     const data = computed(() => store.state.PastEmpManager.pastData);
-    const archiveModal = computed(() => store.state.DialogManager.archiveDialogVisibility);
 
     if(data.value.length === 0){
         store.dispatch('GET_PAST_EMP_DATA');
     }
-
 </script>
-<style lang="scss">
-    
-</style>

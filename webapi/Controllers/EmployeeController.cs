@@ -37,8 +37,13 @@ namespace WebApi.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Employee employee) {
+        public async Task<IActionResult> PostEmployee(Employee employee) {
             return Ok(await _context.AddNewEmployee(employee));
+        }
+
+        [HttpPost("/positions")]
+        public async Task<IActionResult> PostPosition(Position position) {
+            return Ok(await _context.AddNewPosition(position));
         }
 
         [HttpDelete("{Id}")]
@@ -49,6 +54,16 @@ namespace WebApi.Controllers {
                 return BadRequest($"Employee with ID: {Id} not found.");
             }
             return Ok(await _context.DeleteEmployee(employee));
+        }
+
+        [HttpDelete("/positions/{Id}")]
+        public async Task<IActionResult> DeletePosition(int Id) {
+            var position = await _context.Positions.FindAsync(Id);
+
+            if(position == null){
+                return BadRequest($"Position with ID: {Id} not found.");
+            }
+            return Ok(await _context.DeletePosition(position));
         }
 
         [HttpPut]
