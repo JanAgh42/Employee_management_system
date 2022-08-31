@@ -3,7 +3,6 @@ import { Employee, Position } from "./TypesCollection";
 export const dateModifier = (date: string | Date | null | undefined): string => {
 
     if(typeof date === 'string') {
-        console.log(date);
         const dateComponents = date.slice(0, 10).split('-');
 
         if(dateComponents.length > 1){

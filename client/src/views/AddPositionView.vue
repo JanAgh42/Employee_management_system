@@ -18,7 +18,7 @@
 
     const store = useStore();
 
-    const text = 'Invalid position name.';
+    let text: string = 'Invalid position name.', alreadyExists: boolean = false;
     const position: Position = reactive({
         positionId: 0,
         title: ''
@@ -26,7 +26,14 @@
 
     const savePosition = (): void => {
         position.title = position.title.trim();
-        position.title !== '' ? store.dispatch('POST_POS_DATA', position) : store.commit('TOGGLE_CONFIRM_DIALOG', text);
+
+        for(let pos of store.state.PositionManager.positionData) {
+            if(pos.title.toLowerCase() === position.title.toLowerCase()) {
+                alreadyExists = true;
+            }
+        }
+        position.title !== '' && !alreadyExists ? store.dispatch('POST_POS_DATA', position) : store.commit('TOGGLE_CONFIRM_DIALOG', text);
+        alreadyExists = false;
     }
 </script>
 

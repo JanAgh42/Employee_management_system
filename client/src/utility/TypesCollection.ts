@@ -15,7 +15,7 @@ export interface Position {
     title: string
 }
 
-export interface PosEntry extends Position {
+export interface PosEntry extends Position{
     posEntryId: number,
     employeeId: number,
     beginDate: Date,

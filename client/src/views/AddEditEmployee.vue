@@ -46,7 +46,7 @@
                 <th>End date</th>          
             </template>
             <template v-slot:table-body>
-                <PositionEntry v-for="entry in employee.posEntries" :position="entry.title"
+                <PositionEntry v-for="entry in employee.posEntries" :key="entry.posEntryId" :position="entry.title"
                     :beginDate="dateModifier(new Date(entry.beginDate).toISOString())" :endDate="dateModifier(entry.endDate)"/>
             </template>
         </TableComp>
@@ -55,7 +55,7 @@
 
 <script setup lang="ts">
     import { reactive, computed, ref, watch } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import { useStore } from 'vuex';
     import { Employee, PosEntry } from '../utility/TypesCollection';
     import { dateModifier, compareDates } from '../utility/Miscellaneous';
@@ -64,6 +64,7 @@
     import TableComp from '../components/TableComp.vue';
 
     const route = useRoute();
+    const router = useRouter();
     const store = useStore();
 
     let employeeId: number, employee: Employee, dropdown = ref(false), birthDate = ref(''), workDate = ref('');
@@ -126,6 +127,7 @@
             }
             employee.posEntries.push(posEntry);
             store.dispatch(route.params.id === 'new' ? 'POST_EMP_DATA' : 'EDIT_CURRENT_EMP', employee);
+            router.back();
         }
         else {
             store.commit('TOGGLE_CONFIRM_DIALOG', text);
@@ -133,7 +135,6 @@
     }
 
     const validateData = (): boolean => {
-        console.log(employee.dateOfBirth + ' - ' + employee.dateOfBirth.toISOString());
         employee.firstName = employee.firstName.trim();
         employee.lastName = employee.lastName.trim();
         employee.address = employee.address?.trim();

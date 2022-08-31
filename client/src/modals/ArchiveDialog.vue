@@ -27,6 +27,7 @@
     const employeeId: number = store.state.EmployeeManager.entryInfo.retrievedEmployeeId;
     const isPastEmployee: boolean = store.state.EmployeeManager.entryInfo.isPastEmployee;
     const isPosition: boolean = store.state.EmployeeManager.entryInfo.isPosition;
+    
     const text = computed(() => store.state.DialogManager.archiveDialogText);
 
     const loadInitialState = (): void => {
@@ -51,6 +52,7 @@
         loadInitialState();
     }
 </script>
+
 <style scoped lang="scss">
     .modal-background {
         position: absolute;
