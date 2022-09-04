@@ -14,6 +14,7 @@
 <script setup lang="ts">
     import { computed } from 'vue';
     import { useStore } from 'vuex';
+    import { deleteEmpPrompt } from '../utility/Constants';
 
     const props = defineProps<{
         id: number,
@@ -28,7 +29,7 @@
     const fullName = computed(() => props.fName + " " + props.lName);
 
     const toggle = (): void => {
-        store.commit('TOGGLE_ARCHIVE_DIALOG', 'Are you sure you want to delete this employee?');
+        store.commit('TOGGLE_ARCHIVE_DIALOG', deleteEmpPrompt);
         store.commit('LOAD_USER_ID', {id: props.id, past: true});
     }
 </script>

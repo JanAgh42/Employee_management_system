@@ -1,6 +1,5 @@
 import Vuex from 'vuex';
 import { Employee } from '../utility/TypesCollection';
-
 import { DialogManager } from './DialogManager';
 import { EmployeeManager } from './EmployeeManager';
 import { CurrEmpManager } from './DataManagers/CurrEmpManager';

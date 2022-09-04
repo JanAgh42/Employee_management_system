@@ -4,30 +4,18 @@
         <button class="button primary-button" id="save-button" @click="saveChanges" v-if="!viewOnly">Save changes</button>
     </div>
     <div class="modal flex column">
-        <div class="name-section flex">
+        <div class="flex">
             <InputComp name="Firstname" :viewOnly="viewOnly" v-model="employee.firstName"/>
             <InputComp name="Lastname" :viewOnly="viewOnly" v-model="employee.lastName"/>
         </div>
-        <div class="name-section">
+        <div>
             <InputComp name="Address (optional)" :viewOnly="viewOnly" v-model="employee.address"/>
         </div>
-        <div class="name-section flex">
-             <div class="input-field flex column">
-                <label for="dateofbirth">Date of birth: </label>
-                <div class="flex">
-                    <input type="text" name="dateofbirth" class="date-show" disabled="true" v-model="bDate"/>
-                    <input type="date" :disabled="viewOnly" class="date-pick" v-model="birthDate"/>
-                </div>
-            </div>
-            <div class="input-field flex column">
-                <label for="workingsince">Working since: </label>
-                <div class="flex">
-                    <input type="text" name="workingsince" class="date-show" disabled="true" v-model="wDate">
-                    <input type="date" :disabled="viewOnly" class="date-pick" v-model="workDate"/>
-                </div>
-            </div>
+        <div class="flex">
+            <DateInputComp name="Date of birth" :date="employee.dateOfBirth" :viewOnly="viewOnly" v-model="birthDate"/>
+            <DateInputComp name="Working since" :date="employee.workingSince" :viewOnly="viewOnly" v-model="workDate"/>
         </div>
-        <div class="name-section flex">
+        <div class="flex">
              <div class="input-field flex column" @click="toggle">
                 <label for="position">Position: </label>
                 <input type="text" name="position" :class="!viewOnly && 'pointer'" :disabled="true" v-model="pos"/>
@@ -35,7 +23,7 @@
                     <div class="pos" v-for="pos in positions" :key="pos.positionId" @click="retrieve(pos.positionId, pos.title)">{{pos.title}}</div>
                 </div>
             </div>
-            <InputComp name="Salary" :viewOnly="viewOnly" v-model="employee.salary"/>
+            <InputComp name="Salary (€)" :viewOnly="viewOnly" v-model="employee.salary"/>
         </div>
     </div>
     <div class="table-content flex" id="prev-pos-table" v-if="isEdit">
@@ -59,8 +47,10 @@
     import { useStore } from 'vuex';
     import { Employee, PosEntry } from '../utility/TypesCollection';
     import { dateModifier, compareDates } from '../utility/Miscellaneous';
-    import InputComp from '../components/InputComp.vue';
+    import { incorrectInputs } from '../utility/Constants';
     import PositionEntry from '../components/PositionEntry.vue';
+    import DateInputComp from '../components/DateInputComp.vue';
+    import InputComp from '../components/InputComp.vue';
     import TableComp from '../components/TableComp.vue';
 
     const route = useRoute();
@@ -71,7 +61,7 @@
 
     const isPast: boolean = route.params.action === 'past';
     const isNew: boolean = route.params.id === 'new';
-    const isEdit = ref(route.params.action === 'edit');
+    const isEdit: boolean = route.params.action === 'edit';
 
     const viewOnly = computed(() => isPast || route.params.action === 'current');
     const positions = computed(() => store.state.PositionManager.positionData);
@@ -110,28 +100,27 @@
         endDate: null
     });
 
-    const text = 'Some inputs were not filled out correctly.';
+    const helperDate: Date = employee.workingSince;
     const lastPos = employee.posEntries.slice(-1)[0];
 
-    const pos = computed(() => isNew && posEntry.positionId === 0 ? '' : (isNew ? posEntry.title : (posEntry.positionId === 0 ? lastPos.title : posEntry.title)));
-    const bDate = computed(() =>  dateModifier(employee.dateOfBirth.toISOString()));
-    const wDate = computed(() => dateModifier(employee.workingSince.toISOString()));  
+    const pos = computed(() => isNew && posEntry.positionId === 0 ? '' : (isNew ? posEntry.title : (posEntry.positionId === 0 ? lastPos.title : posEntry.title)));  
 
     watch(birthDate, newValue => employee.dateOfBirth = new Date(new Date(newValue).setHours(12, 0, 0, 0)));
     watch(workDate, newValue => employee.workingSince = new Date(new Date(newValue).setHours(12, 0, 0, 0)));
 
     const saveChanges = (): void => {
-        if(validateData()) {
+        if(!validateData()) {
+            store.commit('TOGGLE_CONFIRM_DIALOG', incorrectInputs);
+            return;
+        }
+        if(!isEdit || posEntry.positionId !== 0){
             if(employee.posEntries.length > 0){
                 employee.posEntries[employee.posEntries.length - 1].endDate = posEntry.beginDate;
             }
             employee.posEntries.push(posEntry);
-            store.dispatch(route.params.id === 'new' ? 'POST_EMP_DATA' : 'EDIT_CURRENT_EMP', employee);
-            router.back();
         }
-        else {
-            store.commit('TOGGLE_CONFIRM_DIALOG', text);
-        } 
+        store.dispatch(route.params.id === 'new' ? 'POST_EMP_DATA' : 'EDIT_CURRENT_EMP', employee);
+        router.back();
     }
 
     const validateData = (): boolean => {
@@ -140,11 +129,12 @@
         employee.address = employee.address?.trim();
         posEntry.beginDate = new Date(employee.workingSince);
 
-        const bComp = compareDates(employee.dateOfBirth);
-        const wComp = compareDates(employee.workingSince);
+        const bComp = compareDates(employee.dateOfBirth, new Date());
+        const wComp = compareDates(employee.workingSince, helperDate);
 
-        return employee.firstName !== '' && employee.lastName !== '' && employee.salary > 0 && posEntry.positionId !== 0 && 
-        posEntry.title !== '' && (!bComp && bComp !== null) && (wComp || wComp === null);
+        const primaryCheck = employee.firstName !== '' && employee.lastName !== '' && employee.salary > 0 && !bComp && bComp !== null && (wComp || wComp === null);
+
+        return primaryCheck && (isNew ? posEntry.positionId !== 0 : true) && (isEdit ? wComp === null || (posEntry.positionId !== 0 && posEntry.positionId !== lastPos.positionId) : true);
     }
 
     const toggle = (): boolean => dropdown.value = !dropdown.value;
@@ -161,14 +151,6 @@
         min-width: 800px;
         background-color: rgba(255, 255, 255, 0.2);
         border-radius: 10px;
-
-        .name-section {
-            input[type="date"]::-webkit-inner-spin-button,
-            input[type="date"]::-webkit-calendar-picker-indicator {
-                cursor: pointer;
-                width: 50px;
-            }
-        }
     }
 
     .pos-options {
@@ -198,16 +180,6 @@
                 background-color: rgb(236, 235, 235);
             }
         }
-    }
-
-    .date-pick {
-        flex: 1;
-        margin-left: 7px;
-        max-width: 29px;
-    }
-
-    .date-show {
-        flex: 10;
     }
 
     #prev-pos-table {

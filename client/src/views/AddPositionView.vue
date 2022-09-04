@@ -1,7 +1,7 @@
 <template>
     <div class="button-cont flex">
         <button class="button misc-button" @click="$router.go(-1)">Return back</button>
-        <button class="button primary-button" id="save-button" @click="savePosition">Save position</button>
+        <button class="button primary-button" id="save-button" @click="validatePosition">Save position</button>
     </div>
     <div class="modal flex column">
         <div class="name-section flex">
@@ -13,18 +13,21 @@
 <script setup lang="ts">
     import { reactive } from 'vue';
     import { useStore } from 'vuex';
+    import { useRouter } from 'vue-router';
     import { Position } from '../utility/TypesCollection';
+    import { invalidPos } from '../utility/Constants';
     import InputComp from '../components/InputComp.vue';
 
     const store = useStore();
+    const router = useRouter();
 
-    let text: string = 'Invalid position name.', alreadyExists: boolean = false;
+    let alreadyExists: boolean = false;
     const position: Position = reactive({
         positionId: 0,
         title: ''
     });
 
-    const savePosition = (): void => {
+    const validatePosition = (): void => {
         position.title = position.title.trim();
 
         for(let pos of store.state.PositionManager.positionData) {
@@ -32,8 +35,13 @@
                 alreadyExists = true;
             }
         }
-        position.title !== '' && !alreadyExists ? store.dispatch('POST_POS_DATA', position) : store.commit('TOGGLE_CONFIRM_DIALOG', text);
+        position.title !== '' && !alreadyExists ? uploadPosition() : store.commit('TOGGLE_CONFIRM_DIALOG', invalidPos);
         alreadyExists = false;
+    }
+
+    const uploadPosition = (): void => {
+        store.dispatch('POST_POS_DATA', position);
+        router.back();
     }
 </script>
 

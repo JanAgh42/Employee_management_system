@@ -4,7 +4,7 @@
             <template v-slot:table-header>
                 <th>Name</th>
                 <th>Last position</th>
-                <th>Date</th>
+                <th>Date of release</th>
                 <th>Delete user</th>
             </template>
             <template v-slot:table-body>

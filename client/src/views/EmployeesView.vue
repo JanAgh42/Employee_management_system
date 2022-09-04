@@ -15,7 +15,7 @@
             <template v-slot:table-body>
                 <EmployeeEntry v-for="entry in data" :key="entry.id"
                     :fName="entry.firstName" :lName="entry.lastName"
-                    :position="entry.posEntries[entry.posEntries.length - 1].title" :id="entry.id"/>
+                    :position="entry.posEntries[entry.posEntries.length - 1]?.title" :id="entry.id"/>
             </template>
         </TableComp>
     </div>

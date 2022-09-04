@@ -1,12 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApi.Models;
 using Microsoft.AspNetCore.Cors;
 using WebApi.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Controllers {
 
@@ -71,7 +67,7 @@ namespace WebApi.Controllers {
             var emplList = await _context.EditEmployee(EditedEmpl);
 
             if(emplList == null){
-                return BadRequest("Employee was not found.");
+                return BadRequest($"Employee with ID: {EditedEmpl.Id} not found.");
             }
             return Ok(emplList);
         }

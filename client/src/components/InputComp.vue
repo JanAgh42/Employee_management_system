@@ -1,7 +1,7 @@
 <template>
     <div class="input-field flex column">
         <label :for="name">{{name}}: </label>
-        <input v-if="!isDate" type="text" 
+        <input type="text" 
             :name="name" 
             :disabled="viewOnly" 
             :value="modelValue" 
@@ -13,7 +13,6 @@
     defineProps<{
         name: string,
         viewOnly?: boolean,
-        isDate?: boolean,
         modelValue: string | number | undefined
     }>();
 </script>

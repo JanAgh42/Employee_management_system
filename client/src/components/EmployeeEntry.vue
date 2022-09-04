@@ -18,6 +18,7 @@
 <script setup lang="ts">
     import { computed } from 'vue';
     import { useStore } from 'vuex';
+    import { archivePrompt } from '../utility/Constants';
 
     const props = defineProps<{
         id: number,
@@ -31,7 +32,7 @@
     const fullName = computed(() => props.fName + " " + props.lName);
 
     const toggle = (): void => {
-        store.commit('TOGGLE_ARCHIVE_DIALOG', 'Would you like to archive this employee?');
+        store.commit('TOGGLE_ARCHIVE_DIALOG', archivePrompt);
         store.commit('LOAD_USER_ID', {id: props.id, past: false});
     }
 </script>

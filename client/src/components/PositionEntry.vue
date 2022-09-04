@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
     import { useStore } from 'vuex';
+    import { deletePosPrompt } from '../utility/Constants';
 
     const props = defineProps<{
         id?: number,
@@ -24,7 +25,7 @@
     const store = useStore();
 
     const toggle = (): void => {
-        store.commit('TOGGLE_ARCHIVE_DIALOG', 'Are you sure you want to delete this position?');
+        store.commit('TOGGLE_ARCHIVE_DIALOG', deletePosPrompt);
         store.commit('LOAD_USER_ID', {id: props.id, past: true, position: true});
     }
 </script>
