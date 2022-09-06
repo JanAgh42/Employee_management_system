@@ -3,6 +3,7 @@ using WebApi.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
 
 namespace WebApi.Data {
     public class EmployeesManagementContext : DbContext {
@@ -23,11 +24,20 @@ namespace WebApi.Data {
             return emps;
         }
 
-        public async Task<List<Position>> ReturnPositions() {
-            return await Positions.ToListAsync();
+        public Task<List<Position>> ReturnPositions() {
+            return Positions.ToListAsync();
         }
 
         public async Task<List<Employee>> AddNewEmployee(Employee employee) {
+            DateTime compare = DateTime.Now.Date;
+
+            employee.DateOfBirth = employee.DateOfBirth.Date.AddHours(12);
+            employee.WorkingSince = employee.WorkingSince.Date.AddHours(12);
+
+            if(DateTime.Compare(compare, employee.DateOfBirth) <= 0 || DateTime.Compare(compare, employee.WorkingSince) > 0){
+                return null;
+            }
+
             Employees.Add(employee);
             await this.SaveChangesAsync();
 
@@ -65,9 +75,15 @@ namespace WebApi.Data {
         public async Task<List<Employee>> EditEmployee(Employee editedEmpl) {
             var OldEmpl = await Employees.FindAsync(editedEmpl.Id);
 
-            if(OldEmpl == null){
+            DateTime compare = DateTime.Now.Date;  //UTCNow
+            editedEmpl.DateOfBirth = editedEmpl.DateOfBirth.Date.AddHours(12);
+            editedEmpl.WorkingSince = editedEmpl.WorkingSince.Date.AddHours(12);
+
+            if(OldEmpl == null || DateTime.Compare(compare, editedEmpl.DateOfBirth) <= 0 ||
+            DateTime.Compare(OldEmpl.WorkingSince.Date, editedEmpl.WorkingSince) > 0){
                 return null;
             }
+
             OldEmpl.FirstName = editedEmpl.FirstName;
             OldEmpl.LastName = editedEmpl.LastName;
             OldEmpl.Address = editedEmpl.Address;

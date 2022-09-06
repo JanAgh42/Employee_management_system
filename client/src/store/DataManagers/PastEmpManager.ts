@@ -1,5 +1,6 @@
 import { Employee } from "../../utility/TypesCollection";
 import { callAPI } from "../../utility/Miscellaneous";
+import { pastEndpoint, empEndpoint } from "../../utility/Constants";
 
 export const PastEmpManager = {
     state: {
@@ -16,10 +17,10 @@ export const PastEmpManager = {
     },
     actions: {
         GET_PAST_EMP_DATA({ commit }: { commit: Function }) {
-            callAPI('http://localhost:5000/past', 'GET').then(data => commit('GET_PAST_EMP_DATA', data));
+            callAPI(pastEndpoint, 'GET').then(data => commit('GET_PAST_EMP_DATA', data));
         },
         DELETE_PAST_EMP({ commit }: { commit: Function }, id: number) {
-            callAPI('http://localhost:5000/Employee/' + id, 'DELETE', commit).then(data => commit('GET_PAST_EMP_DATA', data));
+            callAPI(empEndpoint + '/' + id, 'DELETE', commit).then(data => commit('GET_PAST_EMP_DATA', data));
         },
     }
 }

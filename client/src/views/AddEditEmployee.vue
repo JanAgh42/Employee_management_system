@@ -100,7 +100,7 @@
         endDate: null
     });
 
-    const helperDate: Date = employee.workingSince;
+    const helperDate: Date = new Date(employee.workingSince.setHours(12, 0, 0, 0));
     const lastPos = employee.posEntries.slice(-1)[0];
 
     const pos = computed(() => isNew && posEntry.positionId === 0 ? '' : (isNew ? posEntry.title : (posEntry.positionId === 0 ? lastPos.title : posEntry.title)));  

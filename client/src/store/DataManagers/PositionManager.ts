@@ -1,5 +1,6 @@
 import { Position } from "../../utility/TypesCollection";
 import { callAPI } from "../../utility/Miscellaneous";
+import { posEndpoint } from "../../utility/Constants";
 
 export const PositionManager = {
     state: {
@@ -12,13 +13,13 @@ export const PositionManager = {
     },
     actions: {
         GET_POS_DATA({ commit }: { commit: Function }) {
-            callAPI('http://localhost:5000/positions', 'GET').then(data => commit('GET_POS_DATA', data));
+            callAPI(posEndpoint, 'GET').then(data => commit('GET_POS_DATA', data));
         },
         POST_POS_DATA({ commit }: { commit: Function }, entry: Position) {
-            callAPI('http://localhost:5000/positions', 'POST', commit, entry).then(data => commit('GET_POS_DATA', data));
+            callAPI(posEndpoint, 'POST', commit, entry).then(data => commit('GET_POS_DATA', data));
         },
         DELETE_POS({ commit }: { commit: Function }, id: number) {
-            callAPI('http://localhost:5000/positions/' + id, 'DELETE', commit).then(data => commit('GET_POS_DATA', data));
+            callAPI(posEndpoint + '/' + id, 'DELETE', commit).then(data => commit('GET_POS_DATA', data));
         }
     }
 }

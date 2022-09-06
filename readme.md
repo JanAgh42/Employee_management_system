@@ -1,123 +1,33 @@
-# Vývojové prostredie
 
--   dotnet 6.0 SDK
-    -   https://dotnet.microsoft.com/en-us/download/dotnet
--   node 16
-    -   https://nodejs.org/en/
--   VS Code
-    -   https://code.visualstudio.com/
+## An employee management SPA
 
-# Zadanie
+#### Used technologies:
 
-## Vytvorte webovú stránku, ktorá bude slúžiť na správu zamestnancov vo firme.
+-   Frontend: Vue 3 with Vite, Vuex and Vue Router and Typescript
+-   Backend: ASP.NET Core Web API 6
+-   Database: Microsoft SQL Server Express 2019
 
-**K zamestnancovi prislúchajú nasledujúce údaje:**
+#### Every employee has to have the following data:
 
--   Meno - povinný udaj
--   Priezvisko - povinný udaj
--   Adresa - nepovinný udaj
--   Dátum narodenia - povinný udaj, dátum z minulosti
--   Dátum nástupu - povinný udaj, dátum z budúcnosti alebo aktuálny dátum
--   Pozícia vo firme - povinný udaj
--   Plat - povinný udaj, desatinne číslo.
+-   Firstname - required
+-   Lastname - required
+-   Address - optional
+-   Date of birth - required, date from the past
+-   Date of starting work - required, current or future date
+-   Position - required
+-   Salary - required, decimal number
 
-**Možné pozície vo firme:**
+#### The SPA supports the following operations:
 
--   Tester
--   Programátor
--   Support
--   Analytik
--   Obchodník
--   Iné
+-   Show list of current employees
+-   Show list of past employees
+-   Show data of a selected employee (by clicking on its name)
+-   Create a new employee entry
+-   Delete an existing employee entry
+-   Show list of current positions in the company
+-   Create a new position
+-   Delete an existing position
 
-**Pomocou stránky má byť používateľ schopný:**
+The SPA consists of three main views, one containing the list of current employees, one containing the list of past employees and one containing the list of current positions in the company.
 
--   Zobraziť si zoznam aktuálnych zamestnancov.
--   Zobraziť si zoznam predošlých zamestnancov.
--   Zobraziť si detail konkrétneho zamestnanca. Tento detail sa zobrazí výberom konkrétneho zamestnanca zo zoznamu zamestnancov.
--   Vytvoriť nového zamestnanca.
--   Zmazať aktuálneho zamestnanca.
--   Zobraziť zoznam pozícii vo firme.
--   Vytvoriť novu pozíciu.
--   Zmazať pozíciu.
-
-## Ako ma stránka vyzerať
-
-Stránka ma mat tri navigačne tlačidla (umiestnene v hornej časti). Jedno bude slúžiť na zobrazenie zoznamu aktuálnych zamestnancov, druhé na zobrazenie zoznamu predošlých zamestnancov a tretie na zobrazenie zoznamu pozícii vo firme.
-
-**Zoznam aktuálnych zamestnancov ma mat nasledujúce stĺpce:**
-
--   Meno - vznikne spojením mena a priezviska zamestnanca. Po kliknutí na meno zamestnanca sa zobrazí obrazovka, na ktorej budú aktuálne údaje zamestnanca bez možnosti ich editácie.
--   Aktuálna pozícia
--   V tretom stĺpci bude tlačidlo pre editovanie údajov zamestnanca. Po jeho stlačení sa zobrazí obrazovka, na ktorej budú aktuálne údaje zamestnanca s možnosťou ich editácie. Pozícia zamestnanca sa bude vyberať skrz dropdown element. Na obrazovke sa bude nachádzať aj zoznam predošlých pozícii zamestnanca spolu s dátumovým ohraničením (kedy na danú pozíciu nastúpil a dokedy na danej pozícii pracoval). Editovanie zoznamu predošlých pozícii nebude povolene. V dolnej časti tejto obrazovky bude tlačidlo na uloženie zmien.
--   Vo štvrtom stĺpci bude tlačidlo pre zmazanie zamestnanca.
-
-Obrazovka, na ktorej sa nachádza zoznam zamestnancov, bude obsahovať jedno globálne tlačidlo pre pridanie nového zamestnanca. Po jeho stlačení sa zobrazí rovnaká obrazovka ako pri zmene údajov existujúceho zamestnanca. Dátum nástupu ma byt automaticky vyplnený na dnešný deň (ale s možnosťou manuálnej zmeny).
-
-Pred zmazaním zamestnanca sa aplikácia spýta, ci ma zamestnanca archivovať. Archivovaní zamestnanci sa budú zobrazovať v zozname predošlých zamestnancov.
-
-**Zoznam predošlých zamestnancov ma mat nasledujúce stĺpce:**
-
--   Meno - vznikne spojením mena a priezviska zamestnanca. Po kliknutí na meno zamestnanca sa zobrazí obrazovka, na ktorej budú zobrazene aktuálne údaje zamestnanca bez možnosti ich editácie.
-    -Posledná pozícia vo firme.
--   Dátum zmazania (prepustenia) zamestnanca.
--   Vo štvrtom stĺpci bude tlačidlo pre trvale zmazanie zamestnanca zo systému. Trvalému zmazaniu zamestnanca musí predchádzať potvrdenie akcie používateľom (aplikácia sa spýta, ci skutočne trvalo zmazať zamestnanca).
-
-**Zamestnanci a pozície musia byt evidovaní na serveri. Dáta budú uložene v SQL databáze ľubovoľného typu. Môžeme predpokladať, že vždy bude existovať len jeden klient.**
-
-## Technológie
-
-Klient (frontend)
-
--   Vue.js v3
--   Vite
--   Typescript
--   SASS, LESS alebo CSS (Bootstrap alebo iný CSS framework)
-
-Server (backend)
-
--   ASP.NET Core Web API - dotnet 6
-
-Databáza
-
--   SQL
-
-Na čo dbať
-
--   čistota, štruktúra a formátovanie kódu
--   SOLID principle
--   DRY principle
-
-# Čo študovať
-
-**Backend**
-
--   REST API
--   DDD - domain driven design
--   IoC a Dependency Injection
-    -   https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0
--   C#
-    -   https://www.syncfusion.com/ebooks/csharp
-    -   https://docs.microsoft.com/en-us/dotnet/csharp/
--   ASP.NET Web API 2
-    -   https://www.syncfusion.com/ebooks/ASPNET_Web_API_Succinctly
--   Entity Framework
-    -   https://docs.microsoft.com/en-us/ef/
--   C# Async programming
-    -   https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/
-
-**Frontend**
-
--   SPA
-    -   https://en.wikipedia.org/wiki/Single-page_application
--   HTTP
-    -   https://www.syncfusion.com/ebooks/http
--   SASS, LESS alebo CSS
--   Vue3
-    -   https://vuejs.org/guide/introduction.html
--   Typescript
-    -   https://www.syncfusion.com/ebooks/typescript
--   Async/Promises
-    -   https://nodejs.dev/learn/javascript-asynchronous-programming-and-callbacks
--   Bootstrap
-    -   https://www.syncfusion.com/ebooks/twitterbootstrap4-succinctly
+All data regarding employees and positions is saved in an SQL database hosted in MS SQL Server.

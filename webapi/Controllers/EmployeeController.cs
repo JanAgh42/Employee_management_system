@@ -34,7 +34,12 @@ namespace WebApi.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> PostEmployee(Employee employee) {
-            return Ok(await _context.AddNewEmployee(employee));
+            var emplList = await _context.AddNewEmployee(employee);
+
+            if(emplList == null){
+                return BadRequest("An error occured due to incorrect employee data.");
+            }
+            return Ok(emplList);
         }
 
         [HttpPost("/positions")]
@@ -67,7 +72,7 @@ namespace WebApi.Controllers {
             var emplList = await _context.EditEmployee(EditedEmpl);
 
             if(emplList == null){
-                return BadRequest($"Employee with ID: {EditedEmpl.Id} not found.");
+                return BadRequest("Incorrect data or employee not found.");
             }
             return Ok(emplList);
         }
